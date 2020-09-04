@@ -1,0 +1,44 @@
+ion-card {
+	width: inherit;
+	height: 100px;
+}
+
+.pop-out {
+	animation: popOut 0.2s 70ms both ease-in;
+
+	ion-card-header {
+		padding: 0;
+
+		ion-card-subtitle {
+			margin: 0;
+		}
+	}
+}
+
+.pop-in {
+	animation: popIn 0.2s 70ms both ease-in;
+}
+
+@keyframes popOut {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+		height: 0;
+		margin: 0;
+	}
+}
+
+@keyframes popIn {
+	0% {
+		opacity: 0;
+		height: 0;
+		margin: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}

@@ -1,20 +1,35 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>
+            Погода
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">Погода</ion-title>
+        </ion-toolbar>
+    </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+    <ion-searchbar debounce="500" placeholder="Введите название города" [(ngModel)]="searchText"
+                   (ionChange)="onSearch($event)" (ionClear)="onClearText()">
+    </ion-searchbar>
+    <ion-list *ngIf="isSearchComplete" class="search-items-list">
+        <div *ngFor="let _searchItem of searchItems" (click)="onSearchedItemClicked(_searchItem)">
+            {{ _searchItem.name + ( _searchItem.sys ? ', ' + _searchItem.sys.country : '') }}
+        </div>
+    </ion-list>
+
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <city-weather *ngFor="let city of citiesWeather$ | async" [cityWeather]="city"
+                  (onSwipe)="onCitySwipe($event)"
+                  [routerLink]="'/detail/'" routerDirection="forward"
+                  [queryParams]="{lat: city.coord?.lat, lon: city.coord?.lon, name: city.name}"
+    ></city-weather>
+
 </ion-content>

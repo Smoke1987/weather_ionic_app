@@ -1,0 +1,11 @@
+<ion-card  #cityCard class="ion-text-center" [ngClass]="{ 'pop-out': isPopOut, 'pop-in': cityWeather.new_item && !isNewAnimationLoaded }">
+    <ion-card-header>
+        <ion-card-title>
+            {{ cityWeather.name }} {{ cityWeather.main?.temp != null ? ( (cityWeather.main.temp | number:'1.0-0') + '\u00B0C' ) : '' }}
+        </ion-card-title>
+
+        <ion-card-subtitle>
+            {{ cityWeather.main?.feels_like != null ? ( 'Ощущается как ' + (cityWeather.main.feels_like | number:'1.0-0') + '\u00B0C' ) : '' }}
+        </ion-card-subtitle>
+    </ion-card-header>
+</ion-card>

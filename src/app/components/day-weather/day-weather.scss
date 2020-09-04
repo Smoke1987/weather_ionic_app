@@ -1,0 +1,86 @@
+.day-header {
+	--inner-padding-end: 16px;
+
+	&.daily {
+		--color: black;
+		--background: cornsilk;
+
+		.main-header {
+			font-size: 14px;
+			font-weight: 600;
+		}
+		.sub-header {
+			margin-top: 5px;
+		}
+
+		img {
+			max-width: 34px;
+			width: 34px;
+		}
+	}
+}
+
+.current-container {
+	.current-item {
+		padding: 10px 16px;
+		font-size: 12px;
+		border-bottom: 1px solid lightgrey;
+		display: inline-flex;
+		width: 100%;
+		justify-content: space-between;
+		align-items: center;
+
+		.current-item-wrapper {
+			.current-item-header {
+				padding-bottom: 5px;
+			}
+			.current-item-content {
+				display: inline-flex;
+				justify-content: flex-start;
+				align-items: center;
+				padding-top: 5px;
+			}
+		}
+
+		.current-item-image {
+			img {
+				max-width: 34px;
+				width: 34px;
+			}
+		}
+
+		&.hourly-item {
+			.current-item-wrapper {
+				.current-item-header {
+					padding-bottom: 0;
+					.time {
+						padding-bottom: 5px;
+						font-size: 14px;
+						font-weight: 600;
+					}
+				}
+			}
+		}
+	}
+
+}
+
+.daily-container {
+	.daily-item {
+		padding: 0 16px 10px 16px;
+		font-size: 12px;
+
+		&.morning {
+			padding-top: 10px;
+		}
+
+		.daily-item-header {
+			.time {
+				font-weight: bold;
+			}
+			.temp {
+				margin-top: 5px;
+			}
+		}
+	}
+}

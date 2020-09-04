@@ -1,0 +1,131 @@
+<ion-item-divider class="day-header current" *ngIf="isCurrent">
+    <ion-label>
+        <div class="main-header">
+            {{ getDividerLabel(item, listIndex) | titlecase }}
+        </div>
+    </ion-label>
+</ion-item-divider>
+
+<div class="current-container" *ngIf="isCurrent">
+    <div class="current-item">
+        <div class="current-item-wrapper">
+            <div class="current-item-header">
+                {{ 'Сейчас: ' + (item?.temp > 0 ? '+' : '-') + (item?.temp | number:'1.0-0') + '\u00B0C' + ' (ощущается как ' + (item?.temp > 0 ? '+' : '-') + (item?.feels_like | number:'1.0-0') + '\u00B0C)' }}
+            </div>
+
+            <div class="current-item-content" *ngIf="item?.weather[0]">
+                {{ item.weather[0].description }}
+            </div>
+        </div>
+
+        <div class="current-item-image">
+            <img *ngIf="item?.weather[0].icon" src="{{ 'http://openweathermap.org/img/wn/' + item.weather[0].icon + '@2x.png' }}" />
+        </div>
+    </div>
+
+    <div class="current-item hourly-item" *ngFor="let hourly of todayGroup; let i = index;">
+        <div class="current-item-wrapper">
+            <div class="current-item-header">
+                <div class="time">
+                    {{ (hourly.dt * 1000 | date:'HH:mm') }}
+                </div>
+                <div class="temp">
+                    {{ 'температура ' + (item?.temp > 0 ? '+' : '-') + (hourly?.temp | number:'1.0-0') + '\u00B0C' + ' (ощущается как ' + (item?.temp > 0 ? '+' : '-') + (hourly?.feels_like | number:'1.0-0') + '\u00B0C)' }}
+                </div>
+            </div>
+
+            <div class="current-item-content" *ngIf="hourly?.weather[0]">
+                {{ hourly.weather[0].description }}
+            </div>
+        </div>
+
+        <div class="current-item-image">
+            <img *ngIf="hourly?.weather[0].icon" src="{{ 'http://openweathermap.org/img/wn/' + hourly.weather[0].icon + '@2x.png' }}" />
+        </div>
+    </div>
+
+    <ion-item-divider>
+        <ion-label>Завтра</ion-label>
+    </ion-item-divider>
+
+    <div class="current-item hourly-item" *ngFor="let hourly of tomorrowGroup; let i = index;">
+        <div class="current-item-wrapper">
+            <div class="current-item-header">
+                <div class="time">
+                    {{ (hourly.dt * 1000 | date:'HH:mm') }}
+                </div>
+                <div class="temp">
+                    {{ 'температура ' + (item?.temp > 0 ? '+' : '-') + (hourly?.temp | number:'1.0-0') + '\u00B0C' + ' (ощущается как ' + (item?.temp > 0 ? '+' : '-') + (hourly?.feels_like | number:'1.0-0') + '\u00B0C)' }}
+                </div>
+            </div>
+
+            <div class="current-item-content" *ngIf="hourly?.weather[0]">
+                {{ hourly.weather[0].description }}
+            </div>
+        </div>
+
+        <div class="current-item-image">
+            <img *ngIf="hourly?.weather[0].icon" src="{{ 'http://openweathermap.org/img/wn/' + hourly.weather[0].icon + '@2x.png' }}" />
+        </div>
+    </div>
+</div>
+
+<!-- [ngClass] тоже знаю :) -->
+<ion-item-divider class="day-header" *ngIf="!isCurrent" [ngClass]="{ 'daily': !isCurrent}">
+    <ion-label>
+        <div class="main-header">
+            {{ getDividerLabel(item, listIndex) + ' ' + item.weather[0].description }}
+        </div>
+        <div class="sub-header">
+            {{ 'температура от ' + (item?.temp.min > 0 ? '+' : '-') + (item?.temp.min | number:'1.0-0') + '\u00B0C до ' + (item?.temp.max > 0 ? '+' : '-') + (item?.temp.max | number:'1.0-0') + '\u00B0C' }}
+        </div>
+    </ion-label>
+
+    <img slot="end" *ngIf="item?.weather[0].icon" src="{{ 'http://openweathermap.org/img/wn/' + item.weather[0].icon + '@2x.png' }}" />
+</ion-item-divider>
+
+<div class="daily-container" *ngIf="!isCurrent">
+    <div class="daily-item morning">
+        <div class="daily-item-header">
+            <div class="time">
+                {{ 'утром' }}
+            </div>
+            <div class="temp">
+                {{ 'температура ' + (item?.temp.min > 0 ? '+' : '-') + (item?.temp.morn | number:'1.0-0') + '\u00B0C' + ' (ощущается как ' + (item?.temp.min > 0 ? '+' : '-') + (item?.feels_like.morn | number:'1.0-0') + '\u00B0C)' }}
+            </div>
+        </div>
+    </div>
+
+    <div class="daily-item day">
+        <div class="daily-item-header">
+            <div class="time">
+                {{ 'днём' }}
+            </div>
+            <div class="temp">
+                {{ 'температура ' + (item?.temp.min > 0 ? '+' : '-') + (item?.temp.day | number:'1.0-0') + '\u00B0C' + ' (ощущается как ' + (item?.temp.min > 0 ? '+' : '-') + (item?.feels_like.day | number:'1.0-0') + '\u00B0C)' }}
+            </div>
+        </div>
+    </div>
+
+    <div class="daily-item evening">
+        <div class="daily-item-header">
+            <div class="time">
+                {{ 'вечером' }}
+            </div>
+            <div class="temp">
+                {{ 'температура ' + (item?.temp.min > 0 ? '+' : '-') + (item?.temp.eve | number:'1.0-0') + '\u00B0C' + ' (ощущается как ' + (item?.temp.min > 0 ? '+' : '-') + (item?.feels_like.eve | number:'1.0-0') + '\u00B0C)' }}
+            </div>
+        </div>
+    </div>
+
+    <div class="daily-item night">
+        <div class="daily-item-header">
+            <div class="time">
+                {{ 'ночью' }}
+            </div>
+            <div class="temp">
+                {{ 'температура ' + (item?.temp.min > 0 ? '+' : '-') + (item?.temp.night | number:'1.0-0') + '\u00B0C' + ' (ощущается как ' + (item?.temp.min > 0 ? '+' : '-') + (item?.feels_like.night | number:'1.0-0') + '\u00B0C)' }}
+            </div>
+        </div>
+    </div>
+</div>

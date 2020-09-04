@@ -1,0 +1,50 @@
+<ion-header>
+    <ion-toolbar class="only-left-buttons">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="ion-text-center">{{ name }}</ion-title>
+    </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-segment [(ngModel)]="currentForecastLength">
+            <ion-segment-button value="one">
+                <ion-label>
+                    1 день
+                </ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="three">
+                <ion-label>
+                    3 дня
+                </ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="seven">
+                <ion-label>
+                    6 дней
+                </ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <div class="content-wrapper one-day" *ngIf="currentForecastLength =='one'">
+        <!-- Сейчас -->
+        <day-weather *ngIf="currentWeather" [item]="currentWeather" [listIndex]="0" [dayNames]="dayNames" [isCurrent]="true" [hourlyWeather]="hourlyWeather"></day-weather>
+    </div>
+
+    <div class="content-wrapper three-days" *ngIf="currentForecastLength =='three'">
+        <div class="day-container" *ngFor="let dayWeather of daysWeather; let i = index;">
+            <day-weather [item]="dayWeather" [listIndex]="i" [dayNames]="dayNames" *ngIf="0 <= i && i <= 3"></day-weather>
+        </div>
+    </div>
+
+    <div class="content-wrapper six-days" *ngIf="currentForecastLength =='seven'">
+        <div class="day-container" *ngFor="let dayWeather of daysWeather; let i = index;">
+            <day-weather [item]="dayWeather" [listIndex]="i" [dayNames]="dayNames" *ngIf="0 <= i && i <= 7"></day-weather>
+        </div>
+    </div>
+</ion-content>
